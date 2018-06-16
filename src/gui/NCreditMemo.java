@@ -49,7 +49,7 @@ public class NCreditMemo extends javax.swing.JFrame {
             //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
             connObj = DriverManager.getConnection("jdbc:mysql://192.168.1.10:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");
             stateObj = connObj.createStatement();
-            resultObj = stateObj.executeQuery("select orderid from purchaseorder where status Like '%Completed%' ORDER BY orderid;");
+            resultObj = stateObj.executeQuery("select orderid from purchaseorder where status Like '%Completed%' or status like '%Reconciled%' ORDER BY orderid;");
             while (resultObj.next()){
                 ComboPO.addItem(resultObj.getString("orderid"));
             }

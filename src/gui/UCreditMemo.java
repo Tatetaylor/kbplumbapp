@@ -90,9 +90,9 @@ public class UCreditMemo extends javax.swing.JFrame {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }                                              
     
-    private void deleteCreditMemo() {
+    private void changeStatusToDeleted() {
         try {
             //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
             connObj = DriverManager.getConnection("jdbc:mysql://192.168.1.10:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");
@@ -380,9 +380,14 @@ public class UCreditMemo extends javax.swing.JFrame {
     }//GEN-LAST:event_updateCreditMemoButtonActionPerformed
 
     private void deleteCreditMemoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCreditMemoActionPerformed
-        deleteCreditMemo();
-        JOptionPane.showMessageDialog(null, "Credit Memo # "+memoid+" was updated.");
-        this.dispose();
+        int result = JOptionPane.showConfirmDialog(null, "Do you want to delete this credit memo?", "Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(result == JOptionPane.YES_OPTION) {
+            changeStatusToDeleted();
+            JOptionPane.showMessageDialog(null, "Credit Memo Deleted");
+            this.dispose(); 
+        } else if (result == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "No action performed");
+        }
     }//GEN-LAST:event_deleteCreditMemoActionPerformed
 
     /**

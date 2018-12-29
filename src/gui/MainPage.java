@@ -618,6 +618,11 @@ public class MainPage extends javax.swing.JFrame {
         MenuBar.add(Contact);
 
         Reports.setText("Reports");
+        Reports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReportsActionPerformed(evt);
+            }
+        });
 
         jobListMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jobListMenuItem.setText("Job List");
@@ -892,6 +897,11 @@ public class MainPage extends javax.swing.JFrame {
         JobReportDates jrd = new JobReportDates();
         jrd.setVisible(true);
     }//GEN-LAST:event_shipToActionPerformed
+
+    private void ReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportsActionPerformed
+        JobReportDates jrd = new JobReportDates();
+        jrd.setVisible(true);
+    }//GEN-LAST:event_ReportsActionPerformed
    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

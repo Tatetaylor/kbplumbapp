@@ -776,10 +776,10 @@ where po.orderid = $P{orderid} ;]]>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="282" uuid="c1cb7fcd-cda2-41e1-a98d-9e6bb1696c05">
+					<jr:column width="252" uuid="c1cb7fcd-cda2-41e1-a98d-9e6bb1696c05">
 						<jr:columnHeader style="table 5_CH" height="24" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="282" height="24" uuid="47b677b4-4de7-4d8f-a9b5-c6b094175962"/>
+								<reportElement x="0" y="0" width="252" height="24" uuid="47b677b4-4de7-4d8f-a9b5-c6b094175962"/>
 								<box leftPadding="2"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Arial" size="11"/>
@@ -789,7 +789,7 @@ where po.orderid = $P{orderid} ;]]>
 						</jr:columnHeader>
 						<jr:detailCell style="table 5_TD" height="20" rowSpan="1">
 							<textField>
-								<reportElement x="0" y="0" width="282" height="20" uuid="caf5336c-76eb-49d7-b332-f19e35e03365"/>
+								<reportElement x="0" y="0" width="252" height="20" uuid="caf5336c-76eb-49d7-b332-f19e35e03365"/>
 								<box leftPadding="2"/>
 								<textElement verticalAlignment="Middle">
 									<font fontName="Arial" size="9"/>

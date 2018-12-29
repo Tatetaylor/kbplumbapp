@@ -30,7 +30,7 @@ public class VShipTo extends javax.swing.JFrame {
     private void generateJobTable(int jobid, String fromDate, String toDate) {
         try {
             //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
-            connObj = DriverManager.getConnection("jdbc:mysql://192.168.1.10:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");
+            connObj = DriverManager.getConnection("jdbc:mysql://localhost:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");
             stateObj = connObj.createStatement();
             resultObj = stateObj.executeQuery("select po.orderid, pod.orderqty, pod.receivedqty, po.created, prod.productDescription\n" +
                 "from purchaseorder po\n" +
@@ -59,7 +59,7 @@ public class VShipTo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         vShipTo = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         vShipTo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

@@ -200,8 +200,10 @@ public class JobReportDates extends javax.swing.JFrame {
 
     private void generateProductReportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateProductReportButtonActionPerformed
         int jobid = getJob(JobCombo.getSelectedItem().toString());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");        
-        VShipTo viewShipTo = new VShipTo(jobid, (String) df.format(startDatePicker.getDate()), (String) df.format(endDatePicker.getDate()));
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String fromDate = (String) df.format(startDatePicker.getDate());
+        String toDate = (String) df.format(endDatePicker.getDate());
+        VShipTo viewShipTo = new VShipTo(jobid, fromDate, toDate);
         viewShipTo.setVisible(true);
     }//GEN-LAST:event_generateProductReportButtonActionPerformed
 

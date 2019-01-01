@@ -1,13 +1,27 @@
 package gui;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 public class UProductPricing extends javax.swing.JFrame {
+    
+    private static final String COMMA_DELIMITER = ",";
+    String aLine ;
+    Vector columnNames = new Vector();    
+    Vector data = new Vector();    
     
     public UProductPricing() {
         initComponents();
@@ -37,7 +51,15 @@ public class UProductPricing extends javax.swing.JFrame {
             new String [] {
                 "Product ID", "Updated Price"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(updatePricingTable);
 
         importCSVButton.setText("Import CSV");
@@ -129,23 +151,36 @@ public class UProductPricing extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void importCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importCSVButtonActionPerformed
-        BufferedReader bfw = null;
+        FileInputStream File = null;
         try {
-            DefaultTableModel tm = (DefaultTableModel) updatePricingTable.getModel();
-            bfw = new BufferedReader(new FileReader("C:\\temp\\import.csv"));
-            String line;
-            while( (line = bfw.readLine() ) != null ) {   
-                tm.addRow( line.split("\t") );
-            }
-            bfw.close();
-        } catch (Exception ex) {
-            Logger.getLogger(PreviewPurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                bfw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(PreviewPurchaseOrder.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            File = new FileInputStream("C:/temp/import.csv");
+            BufferedReader br = new BufferedReader(new InputStreamReader(File));
+            while ((aLine = br.readLine()) != null) {
+                StringTokenizer st1 = new StringTokenizer(br.readLine(), ",");
+                while( st1.hasMoreTokens() )
+                {
+                    columnNames.addElement(st1.nextToken());
+                }
+                
+                while ((aLine = br.readLine()) != null)
+                {
+                    StringTokenizer st2 = new StringTokenizer(aLine, ",");
+                    Vector row = new Vector();
+
+                    while(st2.hasMoreTokens())
+                    {
+                        row.addElement(st2.nextToken());
+                    }
+                    data.addElement( row );
+                }
+                br.close();
+                DefaultTableModel model = new DefaultTableModel(data, columnNames);
+                updatePricingTable.setModel(model);
+            } 
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(UProductPricing.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+                Logger.getLogger(UProductPricing.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_importCSVButtonActionPerformed
 

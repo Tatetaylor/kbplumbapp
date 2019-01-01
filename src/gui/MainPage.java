@@ -166,6 +166,7 @@ public class MainPage extends javax.swing.JFrame {
         View_Product = new javax.swing.JMenuItem();
         View_Description = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        productUpdate = new javax.swing.JMenuItem();
         Jobs = new javax.swing.JMenu();
         create_Job = new javax.swing.JMenuItem();
         view_Job = new javax.swing.JMenuItem();
@@ -558,6 +559,14 @@ public class MainPage extends javax.swing.JFrame {
         });
         Product.add(jMenuItem2);
 
+        productUpdate.setText("Update Bulk Product Pricing");
+        productUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                productUpdateActionPerformed(evt);
+            }
+        });
+        Product.add(productUpdate);
+
         MenuBar.add(Product);
 
         Jobs.setText("Jobs");
@@ -902,6 +911,11 @@ public class MainPage extends javax.swing.JFrame {
         JobReportDates jrd = new JobReportDates();
         jrd.setVisible(true);
     }//GEN-LAST:event_ReportsActionPerformed
+
+    private void productUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_productUpdateActionPerformed
+        UProductPricing prod = new UProductPricing();
+        prod.setVisible(true);
+    }//GEN-LAST:event_productUpdateActionPerformed
    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -971,6 +985,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem printCM;
     private javax.swing.JMenuItem printPO;
     private javax.swing.JMenuItem productListMenuItem;
+    private javax.swing.JMenuItem productUpdate;
     private javax.swing.JTable purchaseOrder;
     private javax.swing.JMenuItem quoteMenu;
     private javax.swing.JMenuItem reconciledPOs;

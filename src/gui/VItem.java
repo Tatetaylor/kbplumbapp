@@ -43,21 +43,7 @@ public class VItem extends javax.swing.JFrame {
             ItemTable.setRowSorter(sorter);
         }
     }
-  /*  private int findProduct(String supplier, String descp,Double price){
-        int id =-1;
-         try{
-            connObj = DriverManager.getConnection("jdbc:mysql://localhost:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");
-            stateObj = connObj.createStatement();
-            resultObj = stateObj.executeQuery("SELECT p.id from product p inner join category c on c.category_ID=p.category_id inner join productdescription pd on p.description=pd.pdescID \n" +
-            "inner join supplier s on s.supplierid=p.supplier where p.price = "+price+" and s.companyname like '%"+EscapeCharacter.escape(supplier)+"%' and pd.productDescription like '%"+EscapeCharacter.escape(descp)+"%';"); 
-             while (resultObj.next()){
-                 id= resultObj.getInt("id");
-             }
-         } catch (SQLException ex) {
-            Logger.getLogger(VItem.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         return id;
-    }*/
+    
     private void getProduct() {
         try{
         //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
@@ -346,15 +332,7 @@ public class VItem extends javax.swing.JFrame {
         getProduct();
     }//GEN-LAST:event_refreshActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

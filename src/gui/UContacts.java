@@ -30,7 +30,6 @@ public class UContacts extends javax.swing.JFrame {
     }
     
     private void updateContact() {
-        
         try {
             //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
             connObj = DriverManager.getConnection("jdbc:mysql://localhost:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");
@@ -61,8 +60,7 @@ public class UContacts extends javax.swing.JFrame {
             connObj.close();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        
+        }   
     }
     
     private void pullContactFromVContacts() {

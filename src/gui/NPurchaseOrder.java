@@ -456,8 +456,8 @@ public class NPurchaseOrder extends javax.swing.JFrame {
                 row[5] = model1.getValueAt(itemsSearchTable.convertRowIndexToModel(index[0]), 1); //description new [5] old [1]
                 row[3] = model2.getValueAt(index2[0], 2);//MFC new [3] old [2]
                 row[4] = model2.getValueAt(index2[0], 3);//Part ID new [4] old [3]
-                if (model2.getValueAt(index2[0], 5).toString().isEmpty())
-                {JOptionPane.showMessageDialog(null, "Please select a quantity to add.");
+                if (model2.getValueAt(index2[0], 5).toString().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Please select a quantity to add.");
                 }
                 else{
                     row[1] = model2.getValueAt(index2[0], 5);  //Quantity new [1] old [4]

@@ -17,6 +17,7 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -25,9 +26,12 @@ public class UProductPricing extends javax.swing.JFrame {
 
     Connection connObj = null;
     Statement stateObj = null;
-    ResultSet resultObj = null;    
+    ResultSet resultObj = null;
+    public Color genericColor = new Color(209, 220, 204);    
+    private final AlternatingListCellRenderer cellRenderer;    
     
     public UProductPricing() {
+        this.cellRenderer = new AlternatingListCellRenderer();
         initComponents();
     }
 
@@ -42,6 +46,8 @@ public class UProductPricing extends javax.swing.JFrame {
         importCSVButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         updatePricingButton = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        itemsAddedDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -97,21 +103,41 @@ public class UProductPricing extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setText("Close");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        itemsAddedDelete.setText("Delete Item");
+        itemsAddedDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemsAddedDeleteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(itemsAddedDelete)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(updatePricingButton)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(updatePricingButton)
-                .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(updatePricingButton)
+                    .addComponent(jButton2)
+                    .addComponent(itemsAddedDelete))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -203,11 +229,36 @@ public class UProductPricing extends javax.swing.JFrame {
                 preparedStmt.executeUpdate();
             }
             connObj.close();
+             JOptionPane.showMessageDialog(null, "Impoted prices have been updated succesfully.");
+             this.dispose();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
     }//GEN-LAST:event_updatePricingButtonActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void itemsAddedDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemsAddedDeleteActionPerformed
+
+        DefaultTableModel model = (DefaultTableModel) updatePricingTable.getModel();
+        int[] index = updatePricingTable.getSelectedRows();
+        if(index.length <= 0){
+            JOptionPane.showMessageDialog(null, "No items selected");
+        }
+        else if (index.length > 1){
+            JOptionPane.showMessageDialog(null, "Select only one line to delete.");
+        }
+        else {
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            int dialogResult = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete?", "Confirm Deletion", dialogButton);
+            if(dialogResult == 0) {
+                model.removeRow(updatePricingTable.convertRowIndexToModel(index[0]));
+            }
+        }
+    }//GEN-LAST:event_itemsAddedDeleteActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -244,6 +295,8 @@ public class UProductPricing extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton importCSVButton;
+    private javax.swing.JButton itemsAddedDelete;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

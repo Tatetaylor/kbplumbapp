@@ -1,27 +1,31 @@
 package gui;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Calendar;
 import java.util.StringTokenizer;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 
 public class UProductPricing extends javax.swing.JFrame {
     
-    private static final String COMMA_DELIMITER = ",";
-    String aLine ;
-    Vector columnNames = new Vector();    
-    Vector data = new Vector();    
+
+    Connection connObj = null;
+    Statement stateObj = null;
+    ResultSet resultObj = null;    
     
     public UProductPricing() {
         initComponents();
@@ -87,6 +91,11 @@ public class UProductPricing extends javax.swing.JFrame {
         );
 
         updatePricingButton.setText("Update Pricing");
+        updatePricingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatePricingButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -152,21 +161,17 @@ public class UProductPricing extends javax.swing.JFrame {
 
     private void importCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importCSVButtonActionPerformed
         FileInputStream File = null;
+        Vector data = new Vector();
+        Vector column = new Vector();
+        String aLine;
         try {
             File = new FileInputStream("C:/temp/import.csv");
             BufferedReader br = new BufferedReader(new InputStreamReader(File));
+            column.addElement("ID");
+            column.addElement("Price");
             while ((aLine = br.readLine()) != null) {
-                StringTokenizer st1 = new StringTokenizer(br.readLine(), ",");
-                while( st1.hasMoreTokens() )
-                {
-                    columnNames.addElement(st1.nextToken());
-                }
-                
-                while ((aLine = br.readLine()) != null)
-                {
                     StringTokenizer st2 = new StringTokenizer(aLine, ",");
                     Vector row = new Vector();
-
                     while(st2.hasMoreTokens())
                     {
                         row.addElement(st2.nextToken());
@@ -174,15 +179,35 @@ public class UProductPricing extends javax.swing.JFrame {
                     data.addElement( row );
                 }
                 br.close();
-                DefaultTableModel model = new DefaultTableModel(data, columnNames);
-                updatePricingTable.setModel(model);
-            } 
+                DefaultTableModel model = new DefaultTableModel(data, column);
+                updatePricingTable.setModel(model); 
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UProductPricing.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
                 Logger.getLogger(UProductPricing.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_importCSVButtonActionPerformed
+
+    private void updatePricingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePricingButtonActionPerformed
+        
+         TableModel model1 = updatePricingTable.getModel();
+        try {
+            //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
+            connObj = DriverManager.getConnection("jdbc:mysql://localhost:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");
+            for (int i=0;i<model1.getRowCount();i++){
+                String query;
+                query = "UPDATE product set price = ?, lastchange =? where id = " + model1.getValueAt(i, 0) + ";";
+                PreparedStatement preparedStmt =connObj.prepareStatement(query);
+                preparedStmt.setDouble (1, Double.parseDouble(model1.getValueAt(i, 1).toString()));
+                preparedStmt.setDate(2,new java.sql.Date(Calendar.getInstance().getTime().getTime()));
+                preparedStmt.executeUpdate();
+            }
+            connObj.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_updatePricingButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

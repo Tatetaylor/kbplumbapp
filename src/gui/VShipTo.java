@@ -28,8 +28,7 @@ public class VShipTo extends javax.swing.JFrame {
     }
 
     private void generateJobTable(int jobid, String fromDate, String toDate) {
-        System.out.println(fromDate+"   " +toDate +"jobid "+jobid);
-      
+
         try {
             //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
             connObj = DriverManager.getConnection("jdbc:mysql://localhost:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");

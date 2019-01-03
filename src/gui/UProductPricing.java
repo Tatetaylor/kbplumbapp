@@ -23,7 +23,6 @@ import javax.swing.table.TableModel;
 
 public class UProductPricing extends javax.swing.JFrame {
     
-
     Connection connObj = null;
     Statement stateObj = null;
     ResultSet resultObj = null;
@@ -53,17 +52,14 @@ public class UProductPricing extends javax.swing.JFrame {
 
         updatePricingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Product ID", "Updated Price"
+                "Product ID", "Updated Price", "Description", "Supplier"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true
+                false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -186,7 +182,7 @@ public class UProductPricing extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void importCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importCSVButtonActionPerformed
-        FileInputStream File = null;
+        FileInputStream File;
         Vector data = new Vector();
         Vector column = new Vector();
         String aLine;
@@ -195,6 +191,8 @@ public class UProductPricing extends javax.swing.JFrame {
             BufferedReader br = new BufferedReader(new InputStreamReader(File));
             column.addElement("ID");
             column.addElement("Price");
+            column.addElement("Description");
+            column.addElement("Supplier");
             while ((aLine = br.readLine()) != null) {
                     StringTokenizer st2 = new StringTokenizer(aLine, ",");
                     Vector row = new Vector();
@@ -215,8 +213,7 @@ public class UProductPricing extends javax.swing.JFrame {
     }//GEN-LAST:event_importCSVButtonActionPerformed
 
     private void updatePricingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatePricingButtonActionPerformed
-        
-         TableModel model1 = updatePricingTable.getModel();
+        TableModel model1 = updatePricingTable.getModel();
         try {
             //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
             connObj = DriverManager.getConnection("jdbc:mysql://localhost:3306/kbellplumb?useSSL=false", "admin", "1qaz2wsx");
@@ -229,12 +226,11 @@ public class UProductPricing extends javax.swing.JFrame {
                 preparedStmt.executeUpdate();
             }
             connObj.close();
-             JOptionPane.showMessageDialog(null, "Impoted prices have been updated succesfully.");
-             this.dispose();
+            JOptionPane.showMessageDialog(null, "Imported prices have been updated succesfully.");
+            this.dispose();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        
+        }  
     }//GEN-LAST:event_updatePricingButtonActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

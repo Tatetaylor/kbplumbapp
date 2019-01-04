@@ -48,13 +48,14 @@ public class UCreditMemo extends javax.swing.JFrame {
             itemTable.getColumn("cost").setHeaderValue("Unit Price");
             itemTable.getColumn("total").setHeaderValue("Total");
             itemTable.repaint();
-            resultObj = stateObj.executeQuery("select cm.poid,s.companyname, j.name, cm.tax,cm.total ,u.name as 'user', cm.status, cm.comments, cm.created\n" +
+            resultObj = stateObj.executeQuery("select cm.memoid,cm.poid,s.companyname, j.name, cm.tax,cm.total ,u.name as 'user', cm.status, cm.comments, cm.created\n" +
 "                from creditmemo cm inner join supplier s on s.supplierid=cm.supplier inner join user u on u.userid=cm.createdby\n" +
 "                inner join job j on j.jobid=cm.job where cm.memoid="+memoid+";");
     
             Date d;
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             while (resultObj.next()){
+                creditMemoTextField.setText(Integer.toString(resultObj.getInt("memoid")));
                 purchaseOrderTextField.setText(Integer.toString(resultObj.getInt("poid")));
                 supplierTextField.setText(resultObj.getString("companyname"));
                 createdByTextField.setText(resultObj.getString("user"));
@@ -138,6 +139,8 @@ public class UCreditMemo extends javax.swing.JFrame {
         itemTable = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
         commentsTextArea = new javax.swing.JTextArea();
+        puchaseOrderLabel1 = new javax.swing.JLabel();
+        creditMemoTextField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         updateCreditMemoButton = new javax.swing.JButton();
         deleteCreditMemo = new javax.swing.JButton();
@@ -157,24 +160,31 @@ public class UCreditMemo extends javax.swing.JFrame {
         taxTextField.setEditable(false);
         taxTextField.setText("Tax");
 
+        puchaseOrderLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         puchaseOrderLabel.setText("Purchase Order #:");
 
+        supplierLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         supplierLabel.setText("Supplier:");
 
+        jobLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jobLabel.setText("Job:");
 
+        taxLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         taxLabel.setText("Tax:");
 
+        totalLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         totalLabel.setText("Total:");
 
         totalTextField.setEditable(false);
         totalTextField.setText("Total");
 
+        createdByLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         createdByLabel.setText("Created By: ");
 
         createdByTextField.setEditable(false);
         createdByTextField.setText("Created By");
 
+        createdDateLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         createdDateLabel.setText("Created Date:");
 
         commentsLabel.setText("Comments:");
@@ -214,6 +224,12 @@ public class UCreditMemo extends javax.swing.JFrame {
         commentsTextArea.setRows(5);
         jScrollPane1.setViewportView(commentsTextArea);
 
+        puchaseOrderLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        puchaseOrderLabel1.setText("Credit Memo #:");
+
+        creditMemoTextField.setEditable(false);
+        creditMemoTextField.setText("Credit Memo #");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -241,6 +257,10 @@ public class UCreditMemo extends javax.swing.JFrame {
                                 .addGap(106, 106, 106)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(puchaseOrderLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(creditMemoTextField))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jobLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(supplierLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,31 +268,35 @@ public class UCreditMemo extends javax.swing.JFrame {
                                         .addGap(20, 20, 20)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(jobTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(supplierTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                                            .addComponent(taxTextField)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(createdDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(createdDateField))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(createdByLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(createdByTextField))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(totalTextField))
+                                            .addComponent(supplierTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                            .addComponent(taxTextField, javax.swing.GroupLayout.Alignment.LEADING)))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(puchaseOrderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(purchaseOrderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addComponent(purchaseOrderTextField))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(createdDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(createdDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(totalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(createdByLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(createdByTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 37, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(5, 5, 5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(puchaseOrderLabel1)
+                    .addComponent(creditMemoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(purchaseOrderTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(puchaseOrderLabel))
@@ -300,7 +324,7 @@ public class UCreditMemo extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(createdDateLabel)
                     .addComponent(createdDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -362,9 +386,9 @@ public class UCreditMemo extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(14, 14, 14)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -422,6 +446,7 @@ public class UCreditMemo extends javax.swing.JFrame {
     private javax.swing.JTextField createdByTextField;
     private javax.swing.JTextField createdDateField;
     private javax.swing.JLabel createdDateLabel;
+    private javax.swing.JTextField creditMemoTextField;
     private javax.swing.JButton deleteCreditMemo;
     private javax.swing.JRadioButton issuedStatusButton;
     private javax.swing.JTable itemTable;
@@ -433,6 +458,7 @@ public class UCreditMemo extends javax.swing.JFrame {
     private javax.swing.JLabel jobLabel;
     private javax.swing.JTextField jobTextField;
     private javax.swing.JLabel puchaseOrderLabel;
+    private javax.swing.JLabel puchaseOrderLabel1;
     private javax.swing.JTextField purchaseOrderTextField;
     private javax.swing.ButtonGroup statusButtons;
     private javax.swing.JLabel supplierLabel;

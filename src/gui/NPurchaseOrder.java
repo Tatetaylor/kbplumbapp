@@ -115,8 +115,6 @@ public class NPurchaseOrder extends javax.swing.JFrame {
     }
     
     public void getProductDetails (int category, int description){
-        System.out.println("Category is "+category);
-        System.out.println("Description  is "+description);
         try {
     //use your own username and login for the second and third parameters..I'll change this in the future to be dynamic
             connObj = DriverManager.getConnection("jdbc:mysql://localhost:3306/kbellPlumb?useSSL=false", "admin", "1qaz2wsx");
